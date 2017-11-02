@@ -1,0 +1,2 @@
+Open window instance wIMAPAbout/CEN
+Do $clib.$windows.wIMAP.$openonce('*',kWindowCenter)
