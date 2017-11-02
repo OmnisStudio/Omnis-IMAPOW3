@@ -1,0 +1,30 @@
+{
+	"ident": 1017,
+	"order": 16385,
+	"objtype": "kText",
+	"properties": {
+		"align": "kLeftJst",
+		"backcolor": "kColorBackFill",
+		"backpattern": 15,
+		"designactive": true,
+		"edgefloat": "kEFnone",
+		"fieldstyle": "CtrlLabel",
+		"font": 5,
+		"fontsize": 0,
+		"fontstyle": "kPlain",
+		"forecolor": "kColorForeFill",
+		"height": 400,
+		"left": 0,
+		"objlink": 2,
+		"text": {
+			"type": 14,
+			"calc": "\u001B\u000200000001#IMAP OW3 Worker\u001B\u000200000000#\r\rThe IMAP OW3 Worker Object allows an application to manage and retrieve emails stored on a IMAP Server using a background thread asynchronously, thereby giving the user full use of the system whilst carrying out the task. \r\rIn this example press the Start button to perform the selected action on the background thread or use Run to use the current thread.\r\rPlease note, to access emails ensure that your email account has IMAP enabled. Additionally, Gmail users may also need to set  'Allow less secure apps' in their google account settings."
+		},
+		"textcolor": "kColorWindowText",
+		"top": 0,
+		"userinfo": "",
+		"vertcentertext": false,
+		"visible": true,
+		"width": 460
+	}
+}
