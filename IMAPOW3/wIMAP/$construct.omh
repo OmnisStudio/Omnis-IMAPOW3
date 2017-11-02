@@ -1,0 +1,83 @@
+Do $objects.oIMAPWorker.$newref() Returns iImap
+Do iImap.$setCallingInst($cinst)
+
+Do iServerList.$define(iServerURI,iUser,iPassword,iRequireSecureConnection)
+Do iServerList.$add("imaps://imap.gmail.com","","",kTrue)
+Do iServerList.$line.$assign(1)
+Do iServerList.$loadcols()
+
+Do iLogTypeList.$define(iLogTypeChar,iLogType,iUsesHTML)
+Do iLogTypeList.$add("No logging",kOW3logNone,kFalse)
+Do iLogTypeList.$add("Basic logging (HTML)",kOW3logBasic+kOW3logHTML,kTrue)
+Do iLogTypeList.$add("Basic and data logging (HTML)",kOW3logBasic+kOW3logData+kOW3logHTML,kTrue)
+Do iLogTypeList.$add("Full logging (HTML)",kOW3logBasic+kOW3logData+kOW3logSecureData+kOW3logHTML,kTrue)
+Do iLogTypeList.$add("Basic logging",kOW3logBasic,kFalse)
+Do iLogTypeList.$add("Basic and data logging",kOW3logBasic+kOW3logData,kFalse)
+Do iLogTypeList.$add("Full logging",kOW3logBasic+kOW3logData+kOW3logSecureData,kFalse)
+Calculate iLogTypeList.$line as 3
+
+Do iActionList.$define(iActionChar,iActionConst)
+Do iActionList.$add("kOW3imapActionListMailboxes",kOW3imapActionListMailboxes)
+Do iActionList.$add("kOW3imapActionListMessages",kOW3imapActionListMessages)
+Do iActionList.$add("kOW3imapActionFetchMessage",kOW3imapActionFetchMessage)
+Do iActionList.$add("kOW3imapActionSetMessageFlags",kOW3imapActionSetMessageFlags)
+Do iActionList.$add("kOW3imapActionAppendMessage",kOW3imapActionAppendMessage)
+Do iActionList.$add("kOW3imapActionExecute",kOW3imapActionExecute)
+Calculate iActionList.$line as 1
+Calculate $cinst.$objs.tabpane.$objs.wimap_pagedpane_1118.$currentpage as 1
+
+Do iCharsetList.$define(iCharset,iCharsetId)
+Do iCharsetList.$add("Default (UTF-8)",0)
+Do iCharsetList.$add("kUniTypeUTF8",kUniTypeUTF8)
+Do iCharsetList.$add("kUniTypeUTF16BE",kUniTypeUTF16BE)
+Do iCharsetList.$add("kUniTypeUTF16LE",kUniTypeUTF16LE)
+Do iCharsetList.$add("kUniTypeUTF16",kUniTypeUTF16)
+Do iCharsetList.$add("kUniTypeUTF32BE",kUniTypeUTF32BE)
+Do iCharsetList.$add("kUniTypeUTF32LE",kUniTypeUTF32LE)
+Do iCharsetList.$add("kUniTypeUTF32",kUniTypeUTF32)
+Do iCharsetList.$add("kUniTypeNativeCharacters",kUniTypeNativeCharacters)
+Do iCharsetList.$add("kUniTypeAnsiThai",kUniTypeAnsiThai)
+Do iCharsetList.$add("kUniTypeAnsiCentralEuropean",kUniTypeAnsiCentralEuropean)
+Do iCharsetList.$add("kUniTypeAnsiCyrillic",kUniTypeAnsiCyrillic)
+Do iCharsetList.$add("kUniTypeAnsiLatin1",kUniTypeAnsiLatin1)
+Do iCharsetList.$add("kUniTypeAnsiGreek",kUniTypeAnsiGreek)
+Do iCharsetList.$add("kUniTypeAnsiTurkish",kUniTypeAnsiTurkish)
+Do iCharsetList.$add("kUniTypeAnsiHebrew",kUniTypeAnsiHebrew)
+Do iCharsetList.$add("kUniTypeAnsiArabic",kUniTypeAnsiArabic)
+Do iCharsetList.$add("kUniTypeAnsiBaltic",kUniTypeAnsiBaltic)
+Do iCharsetList.$add("kUniTypeAnsiVietnamese",kUniTypeAnsiVietnamese)
+Do iCharsetList.$add("kUniTypeISO8859_1",kUniTypeISO8859_1)
+Do iCharsetList.$add("kUniTypeISO8859_2",kUniTypeISO8859_2)
+Do iCharsetList.$add("kUniTypeISO8859_3",kUniTypeISO8859_3)
+Do iCharsetList.$add("kUniTypeISO8859_4",kUniTypeISO8859_4)
+Do iCharsetList.$add("kUniTypeISO8859_5",kUniTypeISO8859_5)
+Do iCharsetList.$add("kUniTypeISO8859_6",kUniTypeISO8859_6)
+Do iCharsetList.$add("kUniTypeISO8859_7",kUniTypeISO8859_7)
+Do iCharsetList.$add("kUniTypeISO8859_8",kUniTypeISO8859_8)
+Do iCharsetList.$add("kUniTypeISO8859_9",kUniTypeISO8859_9)
+Do iCharsetList.$add("kUniTypeISO8859_10",kUniTypeISO8859_10)
+Do iCharsetList.$add("kUniTypeISO8859_11",kUniTypeISO8859_11)
+Do iCharsetList.$add("kUniTypeISO8859_13",kUniTypeISO8859_13)
+Do iCharsetList.$add("kUniTypeISO8859_14",kUniTypeISO8859_14)
+Do iCharsetList.$add("kUniTypeISO8859_15",kUniTypeISO8859_15)
+Do iCharsetList.$add("kUniTypeISO8859_16",kUniTypeISO8859_16)
+Do iCharsetList.$add("kUniTypeOEM",kUniTypeOEM)
+Calculate iCharsetList.$line as 1
+
+Do lFlagList.$define(iFlagName,iFlagValue)
+Do lFlagList.$add("Do not change",kUnknown)
+Do lFlagList.$add("Change to False",kFalse)
+Do lFlagList.$add("Change to True",kTrue)
+Calculate lFlagList.$line as 1
+Calculate iAnsweredList as lFlagList
+Calculate iDeletedList as lFlagList
+Calculate iDraftList as lFlagList
+Calculate iFlaggedList as lFlagList
+Calculate iSeenList as lFlagList
+
+Do method addObrowserIfSupported
+
+Do iCommandList.$define(iCommand)
+Do iCommandList.$add()
+
+Do iHeaders.$define(iHeader)

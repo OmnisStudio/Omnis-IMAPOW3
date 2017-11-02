@@ -1,0 +1,18 @@
+If iResponse.errorCode<>0
+	Quit method
+End If
+
+If iActionList.C2<>kOW3imapActionFetchMessage
+	Quit method
+End If
+
+If not(iSplitFetchedMessage)&iHeadersOnly
+	Quit method
+End If
+
+If iSplitFetchedMessage
+	Calculate iSavedMimeMessageHeaders as iResponse.resultList
+	Calculate iSaveMimeMessageList as iResponse.mimeList
+Else
+	Calculate iSavedMessage as iResponse.rawData
+End If

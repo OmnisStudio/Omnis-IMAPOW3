@@ -1,0 +1,74 @@
+;  Prepare the worker
+Do method setupLogging
+Calculate iImap.$timeout as iTimeout
+Calculate iImap.$callprogress as iCallProgress
+Calculate iImap.$keepconnectionopen as iKeepConnectionOpen
+Calculate iImap.$requiresecureconnection as iRequireSecureConnection
+If iActionList.C2=kOW3imapActionListMailboxes
+	Do iImap.$init(iServerURI,iUser,iPassword,iActionList.C2,nfd(iMailboxName),iNamesToList) Returns lOk
+Else If iActionList.C2=kOW3imapActionListMessages
+	Do iHeaders.$search($ref.C1="")
+	Do iHeaders.$remove(kListDeleteSelected)
+	Do $cinst.$redraw()
+	If iHeaders.$linecount=0
+		Do iImap.$init(iServerURI,iUser,iPassword,iActionList.C2,nfd(iMailboxName)) Returns lOk
+	Else
+		Do iImap.$init(iServerURI,iUser,iPassword,iActionList.C2,nfd(iMailboxName),iHeaders) Returns lOk
+	End If
+Else If iActionList.C2=kOW3imapActionFetchMessage
+	Calculate iImap.$splitfetchedmessage as iSplitFetchedMessage
+	If iCharsetList.C2
+		Calculate iImap.$defaultcharset as iCharsetList.C2
+	End If
+	Do iImap.$init(iServerURI,iUser,iPassword,iActionList.C2,nfd(iMailboxName),iUID,iHeadersOnly) Returns lOk
+Else If iActionList.C2=kOW3imapActionSetMessageFlags
+	Do iImap.$init(iServerURI,iUser,iPassword,iActionList.C2,nfd(iMailboxName),iUID,row(iAnsweredList.C2,iDeletedList.C2,iDraftList.C2,iFlaggedList.C2,iSeenList.C2)) Returns lOk
+Else If iActionList.C2=kOW3imapActionAppendMessage
+	Calculate iImap.$removemessageid as iRemoveMessageId
+	If iAppendType=0
+		If binlength(iSavedMessage)=0
+			OK message  {No received message to append}
+			Quit method
+		Else
+			Do iImap.$init(iServerURI,iUser,iPassword,iActionList.C2,nfd(iMailboxName),iSavedMessage) Returns lOk
+		End If
+	Else
+		If iSavedMimeMessageHeaders.$linecount=0|iSaveMimeMessageList.$linecount=0
+			OK message  {No received MIME message to append}
+			Quit method
+		Else
+			Do iImap.$init(iServerURI,iUser,iPassword,iActionList.C2,nfd(iMailboxName),iSavedMimeMessageHeaders,iSaveMimeMessageList) Returns lOk
+		End If
+	End If
+Else If iActionList.C2=kOW3imapActionExecute
+	If iCommandList.$linecount=1
+		Do iImap.$init(iServerURI,iUser,iPassword,iActionList.C2,nfd(iMailboxName),iImap.$chartoutf7(nfd(trim(iCommandList.1.C1)))) Returns lOk
+	Else
+		Do lCommandList.$define(lCommand)
+		For lNum from 1 to iCommandList.$linecount step 1
+			Calculate lCommand as iImap.$chartoutf7(nfd(trim(iCommandList.[lNum].C1)))
+			If binlength(lCommand)
+				Do lCommandList.$add(lCommand)
+			End If
+		End For
+		Do iImap.$init(iServerURI,iUser,iPassword,iActionList.C2,nfd(iMailboxName),lCommandList) Returns lOk
+	End If
+End If
+If not(lOk)
+	OK message  {$init error [iImap.$errorcode]: [iImap.$errortext]}
+	Quit method kFalse
+End If
+If pRun
+	Do iImap.$run() Returns lOk
+Else
+	Do iImap.$start() Returns lOk
+End If
+If not(lOk)
+	OK message  {$run error [iImap.$errorcode]: [iImap.$errortext]}
+	Quit method kFalse
+Else If not(pRun)
+	Calculate $cinst.$objs.scrollbox.$objs.cancel.$enabled as kTrue
+	Calculate $cinst.$objs.scrollbox.$objs.start.$enabled as kFalse
+	Calculate $cinst.$objs.scrollbox.$objs.startthencancel.$enabled as kFalse
+End If
+Quit method kTrue

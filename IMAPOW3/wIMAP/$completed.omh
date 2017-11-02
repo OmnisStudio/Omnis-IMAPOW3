@@ -1,0 +1,34 @@
+Calculate iResponse as pResults
+Calculate $cinst.$objs.scrollbox.$objs.cancel.$enabled as kFalse
+Calculate $cinst.$objs.scrollbox.$objs.start.$enabled as kTrue
+Calculate $cinst.$objs.scrollbox.$objs.startthencancel.$enabled as kTrue
+
+Calculate iErrorCode as pResults.errorCode
+Calculate iErrorText as pResults.errorInfo
+If iUsingLogBrowser
+	Do FileOps.$deletefile(iLogHTMLPath)
+	WriteBinFile (iLogHTMLPath,iResponse.log)
+	Calculate iLogBrowser.$urlorcontrolname as con("file://",replaceall(iLogHTMLPath," ","%20"))
+Else
+	Calculate iLog as iResponse.log
+End If
+
+Do method saveReceivedMessage
+
+Do $cinst.$redraw()
+Calculate $cinst.$objs.tabpane.$currenttab as 3
+If iActionList.C2=kOW3imapActionFetchMessage&not(iHeadersOnly)&iSplitFetchedMessage
+	Variable menu command: Open Value Window {iResponse.mimeList}
+	If iUID=137&iResponse.mimeList.$linecount>=5&binlength(iResponse.mimeList.5.C6)>0&iMailboxName="Studio/Studio81"
+		Do FileOps.$deletefile(con(iLogHTMLPath,".bin"))
+		WriteBinFile (con(iLogHTMLPath,".bin"),iResponse.mimeList.5.C6)
+	End If
+Else If kOW3imapActionAppendMessage=iActionList.C2&iErrorCode=0
+	OK message  {Appended UID = [iResponse.UID]}
+Else If kOW3imapActionExecute=iActionList.C2
+	Do iExecuteResponseList.$define(iExecuteResponse)
+	For lNum from 1 to iResponse.resultList.$linecount step 1
+		Do iExecuteResponseList.$add(iImap.$utf7tochar(iResponse.resultList.[lNum].C1,kTrue))
+	End For
+	Variable menu command: Open Value Window {iExecuteResponseList}
+End If
