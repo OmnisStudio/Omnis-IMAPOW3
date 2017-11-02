@@ -1,0 +1,6 @@
+On evClick     ;; Event Parameters - pRow ( Itemreference )
+	Calculate iUser as iServerList.iUser
+	Calculate iPassword as iServerList.iPassword
+	Calculate iRequireSecureConnection as iServerList.iRequireSecureConnection
+	Calculate iServerURI as iServerList.iServerURI
+	Do $cinst.$redraw()
